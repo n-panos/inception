@@ -16,22 +16,7 @@ services:
       - inception
     restart: always
 
-  wordpress:
-    container_name: wordpress
-    build: ./wordpress/
-    ports:
-      - 9000:9000
-    env_file:
-      - .env
-    depends_on:
-      - mariadb
-    volumes:
-      - wordpress:/var/www/html/wordpress
-    network:
-      - inception
-    restart: always
-
-    mariadb:
+  mariadb:
       container_name: mariadb
       build: ./mariadb/
       args:
@@ -48,6 +33,21 @@ services:
       network:
         -inception
       restart: always
+
+  wordpress:
+    container_name: wordpress
+    build: ./wordpress/
+    ports:
+      - 9000:9000
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
+    volumes:
+      - wordpress:/var/www/html/wordpress
+    network:
+      - inception
+    restart: always
 
 volumes:
   mariadb:
