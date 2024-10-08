@@ -6,8 +6,6 @@ services:
       - 443:443
     build:
       context: ./nginx/
-    volumes:
-      - wordpress:/var/www/html/wordpress
     depends_on:
       - wordpress
     networks:
@@ -50,19 +48,17 @@ services:
 
 volumes:
   mariadb:
-    name: mariadb
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
       device: '/home/${USER}/data/mariadb'
   wordpress:
-    name: wordpress
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home${USER}/data/wordpress'
+      device: '/home/${USER}/data/wordpress'
 
 networks:
   inception:
