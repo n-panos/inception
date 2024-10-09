@@ -13,7 +13,7 @@ RUN mkdir -p /var/www/html/wordpress
 
 EXPOSE 9000
 
-COPY srcs/wp-config.php /etc/php/7.3/fpm/pool.d/wp-config.php
+COPY srcs/php-fpm.conf /etc/php/7.3/fpm/pool.d/php-fpm.conf
 COPY srcs/wp.sh /tmp
 
 CMD ["sh", "/tmp/wp.sh"]
