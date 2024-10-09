@@ -28,7 +28,7 @@ services:
       env_file:
         - .env
       networks:
-        -inception
+        - inception
       restart: always
 
   wordpress:
