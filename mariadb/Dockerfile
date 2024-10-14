@@ -19,4 +19,4 @@ COPY ./srcs/my.cnf /etc/mysql/my.cnf
 
 EXPOSE 3306
 
-CMD ["mysqld", "--bind-address=0.0.0.0"]
+CMD ["mysqld", "--user=root", "--bind-address=0.0.0.0"]
