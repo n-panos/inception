@@ -2,18 +2,28 @@ FROM debian:buster
 
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y \
-	curl less php
+	curl \
+	php \
+	php-fpm \
+	php-mysql \
+	wget \
+	unzip \
+	&& apt-get clean
+
 RUN apt-get install -y mariadb-client
-RUN apt-get update && apt-get upgrade -y
 
-RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
-	&& chmod +x wp-cli.phar \
-	&& mv wp-cli.phar /usr/local/bin/wp
-RUN mkdir -p /var/www/html/wordpress
+RUN curl -O https://wordpress.org/latest.tar.gz \
+    && tar -xvzf latest.tar.gz \
+    && mv wordpress /var/www/html/wordpress \
+    && rm latest.tar.gz
+RUN chown -R www-data:www-data /var/www/html/wordpress \
+    && chmod -R 755 /var/www/html/wordpress
 
+# Copiar archivo de configuración wp-config.php personalizado
+COPY wp-config.php /var/www/html/wordpress/wp-config.php
+
+# Exponer puerto PHP-FPM (si estás usando PHP-FPM)
 EXPOSE 9000
 
-COPY srcs/php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
-COPY srcs/wp.sh /tmp
-
-CMD ["sh", "/tmp/wp.sh"]
+# Comando para ejecutar PHP-FPM en modo foreground
+CMD ["php-fpm", "--nodaemonize"]
