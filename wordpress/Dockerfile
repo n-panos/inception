@@ -20,10 +20,11 @@ RUN chown -R www-data:www-data /var/www/html/wordpress \
     && chmod -R 755 /var/www/html/wordpress
 
 # Copiar archivo de configuración wp-config.php personalizado
-COPY wp-config.php /var/www/html/wordpress/wp-config.php
+COPY /srcs/wp-config.php /var/www/html/wordpress/wp-config.php
+COPY /srcs/wp.sh /tmp/wp.sh
 
 # Exponer puerto PHP-FPM (si estás usando PHP-FPM)
 EXPOSE 9000
 
 # Comando para ejecutar PHP-FPM en modo foreground
-CMD ["php-fpm", "--nodaemonize"]
+CMD ["sh", "/tmp/wp.sh"]
