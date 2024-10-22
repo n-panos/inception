@@ -26,7 +26,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 #    && chmod -R 755 /var/www/html/wordpress
 
 # Copiar archivo de configuración wp-config.php personalizado
-COPY /srcs/wp-config.php /var/www/html/wordpress/wp-config.php
+COPY /srcs/wp-config.php /tmp/wp-config.php
 COPY /srcs/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 COPY /srcs/wp.sh /tmp
 

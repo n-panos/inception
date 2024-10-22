@@ -9,4 +9,6 @@ wp plugin update --allow-root --all
 wp post create --path="/var/www/html/wordpress" --allow-root --post_type=post --post_title='Testing inception!' --post_status=publish
 wp option update --path="/var/www/html/wordpress" --allow-root blogdescription 'IPANOS test'
 mkdir -p /run/php/
+cd ~
+mv /tmp/wp-config.php /var/www/html/wordpress/
 php-fpm7.3 -F
