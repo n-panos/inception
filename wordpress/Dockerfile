@@ -20,8 +20,9 @@ RUN curl -O https://wordpress.org/latest.tar.gz \
 RUN chown -R www-data:www-data /var/www/html/wordpress \
     && chmod -R 755 /var/www/html/wordpress
 
+#COPY /srcs/wp-config.php /var/www/html/wordpress/wp-config.php
 # Copiar archivo de configuración wp-config.php personalizado
-COPY /srcs/wp-config.php /var/www/html/wordpress/wp-config.php
+COPY /conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 COPY /srcs/wp.sh /tmp
 
 # Exponer puerto PHP-FPM (si estás usando PHP-FPM)
