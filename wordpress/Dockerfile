@@ -22,7 +22,7 @@ RUN chown -R www-data:www-data /var/www/html/wordpress \
 
 # Copiar archivo de configuración wp-config.php personalizado
 COPY /srcs/wp-config.php /var/www/html/wordpress/wp-config.php
-COPY /srcs/wp.sh /tmp/wp.sh
+COPY /srcs/wp.sh /tmp
 
 # Exponer puerto PHP-FPM (si estás usando PHP-FPM)
 EXPOSE 9000
