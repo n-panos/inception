@@ -13,6 +13,11 @@ RUN apt-get install -y \
 RUN apt-get install -y mariadb-client
 RUN mkdir -p /var/www/html/wordpress
 
+# Descargar WP-CLI
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+    && chmod +x wp-cli.phar \
+    && mv wp-cli.phar /usr/local/bin/wp
+
 RUN curl -O https://wordpress.org/latest.tar.gz \
     && tar -xvzf latest.tar.gz \
     && mv wordpress /var/www/html/wordpress \
@@ -22,7 +27,7 @@ RUN chown -R www-data:www-data /var/www/html/wordpress \
 
 #COPY /srcs/wp-config.php /var/www/html/wordpress/wp-config.php
 # Copiar archivo de configuración wp-config.php personalizado
-COPY /conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+COPY /srcs/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 COPY /srcs/wp.sh /tmp
 
 # Exponer puerto PHP-FPM (si estás usando PHP-FPM)
