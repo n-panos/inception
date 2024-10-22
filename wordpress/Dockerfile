@@ -11,6 +11,7 @@ RUN apt-get install -y \
 	&& apt-get clean
 
 RUN apt-get install -y mariadb-client
+RUN mkdir -p /var/www/html/wordpress
 
 RUN curl -O https://wordpress.org/latest.tar.gz \
     && tar -xvzf latest.tar.gz \
