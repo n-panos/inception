@@ -1,6 +1,7 @@
 
 chown -R www-data:www-data /var/www/html/wordpress
-chmod -R 755 /var/www/html/wordpresscd /var/www/html/wordpress
+chmod -R 755 /var/www/html/wordpress
+cd /var/www/html/wordpress
 wp core download  --path="/var/www/html/wordpress" --allow-root
 wp config create --allow-root --dbname=$DB_DATABASE --dbuser=$DB_USER --dbpass=$DB_USERPASS --dbhost=$DB_HOSTNAME --dbprefix=wp_
 wp core install --path="/var/www/html/wordpress" --allow-root --url=$DOMAIN --title="$WORDPRESS_DB_TITLE" --admin_user=$WORDPRESS_DB_ADMIN --admin_password=$WORDPRESS_DB_ADMIN_PASSWORD --admin_email=$WORDPRESS_DB_ADMIN_EMAIL
