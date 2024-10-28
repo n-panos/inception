@@ -19,7 +19,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
     && mv wp-cli.phar /usr/local/bin/wp
 
 # Copiar archivo de configuración
-COPY /srcs/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+COPY /srcs/php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
 COPY /srcs/wp.sh /tmp
 
 # Exponer puerto PHP-FPM (si estás usando PHP-FPM)
