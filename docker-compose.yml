@@ -39,7 +39,7 @@ services:
     env_file:
       - .env
     depends_on:
-      mariadb
+      - mariadb
     volumes:
       - wordpress:/var/www/html/wordpress
     networks:
