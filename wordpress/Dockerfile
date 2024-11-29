@@ -18,8 +18,6 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
     && chmod +x wp-cli.phar \
     && mv wp-cli.phar /usr/local/bin/wp
 
-RUN mkdir -p /var/www/html/wordpress
-
 # Copiar archivo de configuración
 COPY /srcs/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 COPY /srcs/wp.sh /tmp
