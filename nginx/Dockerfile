@@ -10,4 +10,6 @@ RUN rm -rf /etc/nginx/sites-enabled/*
 
 COPY ./srcs/nginx.conf ./etc/nginx/conf.d/nginx.conf
 
+EXPOSE 443
+
 CMD ["nginx", "-g", "daemon off;"]
