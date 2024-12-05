@@ -4,8 +4,8 @@ services:
     container_name: nginx
     ports:
       - 443:443
-    build:
-      context: ./requirements/nginx/
+    build: ./requirements/nginx/
+    image: mynginx:1.0
     volumes:
       - wordpress:/var/www/html/wordpress
     depends_on:
@@ -15,25 +15,21 @@ services:
     restart: always
 
   mariadb:
-      container_name: mariadb
-      build:
-        context: ./requirements/mariadb/
-        args:
-          DB_DATABASE: ${DB_DATABASE}
-          DB_USERPASS: ${DB_USERPASS}
-          DB_USER: ${DB_USER}
-          DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      volumes:
-        - mariadb:/var/lib/mysql
-      env_file:
-        - .env
-      networks:
-        - inception
-      restart: always
+    container_name: mariadb
+    build: ./requirements/mariadb/
+    env_file:
+      - .env
+    image: mydb:1.0  
+    volumes:
+      - mariadb:/var/lib/mysql
+    networks:
+      - inception
+    restart: always
 
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress/
+    image: mywp:1.0
     env_file:
       - .env
     depends_on:

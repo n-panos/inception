@@ -1,22 +1,20 @@
 FROM debian:buster
 
-ARG DB_DATABASE
-ARG DB_USERPASS
-ARG DB_USER
-ARG DB_ROOT_PASSWORD
-
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y mariadb-server
-RUN mkdir -p /var/lib/mysql
-RUN chown -R mysql:mysql /var/lib/mysql
-RUN service mysql start \
-        && mysql -u root -e  "CREATE DATABASE IF NOT EXISTS $DB_DATABASE; \
-                ALTER USER 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_PASSWORD'; \
-                GRANT ALL PRIVILEGES ON $DB_DATABASE.* TO '$DB_USER'@'%' IDENTIFIED BY '$DB_USERPASS'; \
-                FLUSH PRIVILEGES;"
-
-COPY ./srcs/my.cnf /etc/mysql/my.cnf
+RUN apt-get update
+RUN apt-get install -y mariadb-server mariadb-client \
+&& rm -rf /var/lib/apt/lists/* \
+# purge and re-create /var/lib/mysql with appropriate ownership
+&& mkdir -p /var/run/mysqld \
+&& chown -R mysql:mysql /var/run/mysqld \
+# ensure that /var/run/mysqld (used for socket and lock files) is writable regardless of the UID our mysqld instance ends up having at runtime
+&& chmod 777 /var/run/mysqld
 
 EXPOSE 3306
 
-CMD ["mysqld", "--user=root", "--bind-address=0.0.0.0"]
+COPY ./tools/create_db.sh /usr/local/bin/
+COPY ./tools/wordpress.sql /usr/local/bin/
+ENTRYPOINT ["create_db.sh"]
+
+#Command to launch mariadb and enable the database to listen globally
+
+CMD ["mysqld", "--bind-address=0.0.0.0"]
