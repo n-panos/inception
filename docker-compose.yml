@@ -23,8 +23,6 @@ services:
           DB_USERPASS: ${DB_USERPASS}
           DB_USER: ${DB_USER}
           DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      ports:
-        - 3306:3306
       volumes:
         - mariadb:/var/lib/mysql
       env_file:
@@ -36,8 +34,6 @@ services:
   wordpress:
     container_name: wordpress
     build: ./wordpress/
-    ports:
-      - 9000:9000
     env_file:
       - .env
     depends_on:
@@ -52,15 +48,15 @@ volumes:
   mariadb:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '/home/${USER}/data/mariadb'
+      type: none
+      o: bind
+      device: /home/${USER}/data/mariadb
   wordpress:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '/home/${USER}/data/wordpress'
+      type: none
+      o: bind
+      device: /home/${USER}/data/wordpress
 
 networks:
   inception:
