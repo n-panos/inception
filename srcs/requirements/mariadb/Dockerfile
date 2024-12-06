@@ -9,12 +9,12 @@ RUN apt-get install -y mariadb-server mariadb-client \
 
 EXPOSE 3306
 
-COPY ./tools/db_init.sh /tmp/
+COPY ./tools/db_init.sh /usr/local/bin/
 COPY ./conf/my.cnf /tmp/
 
-RUN chmod +x /tmp/db_init.sh
+RUN chmod +x /usr/local/bin/db_init.sh
 
-ENTRYPOINT ["/tmp/db_init.sh"]
+ENTRYPOINT ["/usr/local/bin/db_init.sh"]
 
 
 CMD ["mysqld", "--bind-address=0.0.0.0"]
