@@ -10,6 +10,8 @@ services:
       - wordpress:/var/www/html/wordpress
     networks:
       - inception
+    depends_on :
+      - wordpress
     restart: always
 
   mariadb:
