@@ -27,8 +27,8 @@ _EOF_
 #Create db and user
 	echo "CREATE DATABASE IF NOT EXISTS $DB_DATABASE; GRANT ALL ON $DB_DATABASE.* TO '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'; FLUSH PRIVILEGES;" | mysql -uroot
 
-#Import DB
-mysql -uroot -p$DB_ROOT_PASSWORD $DB_DATABASE < /usr/local/bin/wp.sql
+#Config file
+mv /tmp/my.cnf /etc/mysql/my.cnf
 
 fi
 
