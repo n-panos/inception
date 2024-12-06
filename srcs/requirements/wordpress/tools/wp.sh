@@ -2,18 +2,22 @@ if [ -f ./wordpress/wp-config.php ]
 then
 	echo "wordpress already downloaded"
 else
-{
-    cd /var/www/html/wordpress
-    wp core download  --path="/var/www/html/wordpress" --allow-root
-	wp config create --allow-root --dbname=$DB_DATABASE --dbuser=$DB_USER --dbpass=$DB_USERPASS --dbhost=$DB_HOSTNAME --dbprefix=wp_
-	wp core install --path="/var/www/html/wordpress" --allow-root --url=$DOMAIN --title="$WORDPRESS_DB_TITLE" --admin_user=$WORDPRESS_DB_ADMIN --admin_password=$WORDPRESS_DB_ADMIN_PASSWORD --admin_email=$WORDPRESS_DB_ADMIN_EMAIL
-	wp plugin update --allow-root --all
-	wp user create --path="/var/www/html/wordpress" --allow-root $WORDPRESS_DB_USER $WORDPRESS_DB_USER_EMAIL --user_pass=$WORDPRESS_DB_USER_PASSWORD
-	#wp theme install $WORDPRESS_THEME --activate --allow-root
-	wp plugin update --allow-root --all
-	wp post create --path="/var/www/html/wordpress" --allow-root --post_type=post --post_title='Testing inception!' --post_status=publish
-	wp option update --path="/var/www/html/wordpress" --allow-root blogdescription 'IPANOS test'
-	mkdir -p /run/php/
-	}
+	#wp default download
+	wget https://wordpress.org/latest.tar.gz
+	tar -xzvf latest.tar.gz
+	rm -rf latest.tar.gz
+
+	#Default config file change
+	rm -rf /etc/php/7.3/fpm/pool.d/www.conf
+	mv ./www.conf /etc/php/7.3/fpm/pool.d/www.conf
+
+	#env variables
+	cd /var/www/html/wordpress
+	sed -i "s/username_here/$DB_USER/g" wp-config-sample.php
+	sed -i "s/password_here/$DB_PASSWORD/g" wp-config-sample.php
+	sed -i "s/localhost/$DB_HOSTNAME/g" wp-config-sample.php
+	sed -i "s/database_name_here/$DB_DATABASE/g" wp-config-sample.php
+	cp wp-config-sample.php wp-config.php
 fi
-php-fpm7.3 -F
+
+exec "$@"
