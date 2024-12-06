@@ -1,3 +1,5 @@
+#!/bin/sh
+
 if [ -f ./wordpress/wp-config.php ]
 then
 	echo "wordpress already downloaded"
