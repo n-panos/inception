@@ -10,7 +10,7 @@ RUN apt-get install -y mariadb-server mariadb-client \
 EXPOSE 3306
 
 COPY ./tools/db_init.sh /usr/local/bin/
-COPY ./conf/my.cnf /tmp/
+COPY ./conf/wp.sql /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/db_init.sh
 
