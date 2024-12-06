@@ -10,7 +10,7 @@ then
 else
 
 # Need root password to connect
-mysql_secure_installation <<_EOF_
+usr/bin/mysql_secure_installation <<_EOF_
 
 Y
 123root
@@ -28,7 +28,7 @@ echo "GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '$DB_ROOT_PASSWORD'; FLUSH PR
 echo "CREATE DATABASE IF NOT EXISTS $DB_DATABASE; GRANT ALL ON $DB_DATABASE.* TO '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'; FLUSH PRIVILEGES;" | mysql -uroot
 
 #Config file
-mv /tmp/my.cnf /etc/mysql/my.cnf
+#mv /tmp/my.cnf /etc/mysql/my.cnf
 
 fi
 
