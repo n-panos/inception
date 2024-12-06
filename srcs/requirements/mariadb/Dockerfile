@@ -13,7 +13,6 @@ COPY ./tools/db_init.sh /tmp/
 COPY ./conf/my.cnf /tmp/
 
 RUN chmod +x /tmp/db_init.sh
-RUN chmod +x /usr/local/bin/wordpress.sql
 
 ENTRYPOINT ["/tmp/db_init.sh"]
 
